@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Producto</ion-title>
+    <ion-title>{{producto.nombre}}</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -8,5 +8,7 @@
 </ion-header>
 
 <ion-content>
-
+<ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+  agragar al carrito
+</ion-button>
 </ion-content>
