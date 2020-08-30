@@ -14,7 +14,7 @@ export class ProductoPage implements OnInit {
   ngOnInit() {
     this.activeteRoute.paramMap.subscribe(paramMap => { //el segundo paramMap es una variable y el primero una Clase.
       this.producto = this.prodSrv.obtenerPorId(paramMap.get('id'));
-      alert(paramMap.get("id"));
+      //alert(paramMap.get("id"));
     });
   }
 
