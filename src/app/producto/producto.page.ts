@@ -18,8 +18,9 @@ export class ProductoPage implements OnInit {
     });
   }
   agregarCarrito() {
-    this.prodSrv.agregarUnoAlCarrito()
-    alert('se ejecuto la función');
+    this.activeteRoute.paramMap.subscribe(paramMap => {
+      this.prodSrv.agregarUnoAlCarrito(paramMap.get('id'));
+    });
   }
 
 }

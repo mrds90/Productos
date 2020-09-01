@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../model/producto';
+import { Carrito } from '../model/carrito';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,14 +30,47 @@ export class ProductoService {
       imagen: 'https://medias.musimundo.com/medias/sys_master/images/images/h87/he8/10166024339486/00291043-138995-138995-01-138995-01.jpg'
     }
   ]
-  private productosComprados: number = 0;
+  //private carrito: Array<Carrito>;
+  private carrito: Array<Carrito> = [];
+  
   constructor() { }
-  public agregarUnoAlCarrito()
-  {
-    this.productosComprados=this.productosComprados+1
-  }
-  public verArticulosComprados() {
-    return this.productosComprados;
+  public agregarUnoAlCarrito(id1:string)
+  { 
+    if (this.carrito.length == 0) {
+      let carro: Carrito = {
+        id: id1,
+        cantidad: 1
+      }
+      this.carrito.push(carro);
+    }
+    else {
+      let flag = 0;
+      for (let carr of this.carrito) {
+        if (carr.id == id1) {
+          carr.cantidad = carr.cantidad + 1;
+          flag = 1;
+        }
+      }
+      if (flag == 0) {
+        
+        let carro: Carrito = {
+          id: id1,
+          cantidad: 1
+        }
+        this.carrito.push(carro);
+      }
+        
+      }
+    }
+    
+    //this.productosComprados = this.productosComprados + carr.cantidad;
+  
+  public cantidadDeArticulosComprados() {
+    let aux=0;
+    for (let carr of this.carrito) {
+      aux = aux + carr.cantidad;
+    }
+  return aux;
   }
   public obtenerTodos() {
     return this.productos;

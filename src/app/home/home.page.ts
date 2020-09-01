@@ -14,9 +14,12 @@ export class HomePage {
   
   constructor(private prodSrv: ProductoService, public router: Router) {
     this.router.events.subscribe((ev) => {
-      if (ev instanceof NavigationEnd) { this.cantidad = prodSrv.verArticulosComprados();}
+      if (ev instanceof NavigationEnd) {
+        this.cantidad = prodSrv.cantidadDeArticulosComprados();
+        this.productos = prodSrv.obtenerTodos();
+      }
     });
-    this.productos = prodSrv.obtenerTodos();
+    
     };
 
   }
