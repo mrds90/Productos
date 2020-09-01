@@ -18,7 +18,9 @@
   <ion-item>
    <ion-label color='primary'>{{producto.cantidad}} disponibles</ion-label>
   </ion-item>
-    <ion-button (click)="onClick()" expand="block" shape="round">
+    <ion-button (click)="agregarCarrito()" expand="block" shape="round" [routerLink]="['/home']">
       agragar al carrito
     </ion-button>
+    
+
 </ion-content>

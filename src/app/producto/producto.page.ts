@@ -17,5 +17,9 @@ export class ProductoPage implements OnInit {
       //alert(paramMap.get("id"));
     });
   }
+  agregarCarrito() {
+    this.prodSrv.agregarUnoAlCarrito()
+    alert('se ejecuto la función');
+  }
 
 }

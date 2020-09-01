@@ -28,9 +28,15 @@ export class ProductoService {
       imagen: 'https://medias.musimundo.com/medias/sys_master/images/images/h87/he8/10166024339486/00291043-138995-138995-01-138995-01.jpg'
     }
   ]
-  
+  private productosComprados: number = 0;
   constructor() { }
-  
+  public agregarUnoAlCarrito()
+  {
+    this.productosComprados=this.productosComprados+1
+  }
+  public verArticulosComprados() {
+    return this.productosComprados;
+  }
   public obtenerTodos() {
     return this.productos;
   }
