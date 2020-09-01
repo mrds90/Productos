@@ -84,6 +84,11 @@ export class ProductoService {
   }
   public agregar(prod: Producto) {
     this.productos.push(prod);
-  }  
+  }
+  
+  public cargarCarrito()
+  {
+    return this.carrito;
+  }
   
 }
