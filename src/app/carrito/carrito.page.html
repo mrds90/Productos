@@ -27,4 +27,7 @@
   <ion-label>{{cantidad}} articulos</ion-label>
   <ion-label slot="end">Total: ${{total}}</ion-label>
 </ion-item>
+<ion-button (click)="comprarCarrito()" expand="block" shape="round" [routerLink]="['/home']">
+  Comprar
+</ion-button>
 </ion-content>

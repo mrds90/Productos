@@ -42,7 +42,11 @@ import { Carrito } from '../model/carrito';
       }
     }
   }
-  
+  public comprarCarrito() {
+    alert('compra realizada')
+    this.prodSrv.comprarCarrito(this.carro);
+  }
+
   
     }
   

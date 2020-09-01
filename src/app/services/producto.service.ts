@@ -90,5 +90,15 @@ export class ProductoService {
   {
     return this.carrito;
   }
-  
+  private sacarProducto(id,cantidad) {
+    for (let prod of this.productos)
+      if (prod.id == id) {
+        prod.cantidad = prod.cantidad - cantidad;
+      }
+  }
+  public comprarCarrito(carro: Array<Carrito>) {
+    for (let car of carro)
+      this.sacarProducto(car.id, car.cantidad)
+    this.carrito = [];
+  }
 }
