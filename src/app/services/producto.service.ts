@@ -34,34 +34,68 @@ export class ProductoService {
   private carrito: Array<Carrito> = [];
   
   constructor() { }
-  public agregarUnoAlCarrito(id1:string)
-  { 
-    if (this.carrito.length == 0) {
-      let carro: Carrito = {
-        id: id1,
-        cantidad: 1
+  private controlDeStock(id: string)
+  {
+    let aux: number;
+    for (let prod of this.productos){
+      if (prod.id == id) {
+        aux = prod.cantidad - this.cantidadCarro(id);
       }
-      this.carrito.push(carro);
+    }
+    if (aux <= 0) {
+      return false;
     }
     else {
-      let flag = 0;
+      return true;
+    }
+    
+  }
+  private cantidadCarro(id:string) {
+    if (this.carrito.length > 0) {
       for (let carr of this.carrito) {
-        if (carr.id == id1) {
-          carr.cantidad = carr.cantidad + 1;
-          flag = 1;
+        if (carr.id == id) {
+          return carr.cantidad;
         }
       }
-      if (flag == 0) {
-        
+    }
+    else {
+      return 0;
+    }
+    }  
+  
+  
+  public agregarUnoAlCarrito(id1: string) {
+    if (this.controlDeStock(id1) == true) {
+      if (this.carrito.length == 0) {
         let carro: Carrito = {
           id: id1,
           cantidad: 1
         }
         this.carrito.push(carro);
       }
+      else {
+        let flag = 0;
+        for (let carr of this.carrito) {
+          if (carr.id == id1) {
+            carr.cantidad = carr.cantidad + 1;
+            flag = 1;
+          }
+        }
+        if (flag == 0) {
+        
+          let carro: Carrito = {
+            id: id1,
+            cantidad: 1
+          }
+          this.carrito.push(carro);
+        }
         
       }
     }
+    else {
+      alert('No hay STOCK')
+    }
+  }
     
     //this.productosComprados = this.productosComprados + carr.cantidad;
   
