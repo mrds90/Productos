@@ -9,19 +9,29 @@
 
 <ion-content>
   <ion-item>
-    <ion-img [src]="producto.imagen"></ion-img>
+    <div class="contenedor">
+    <ion-img class="tamanoImg" [src]="producto.imagen"></ion-img>
+    </div>
   </ion-item>
   
   <ion-item>
     <ion-label slot="start">Precio: ${{producto.precio}}</ion-label>
   </ion-item>
   <ion-item>
-   <ion-label color='secondary'>{{producto.cantidad}} disponibles</ion-label>
+   <ion-label color='primary'>Cantidad: </ion-label>
+   <ion-input type="number" placeholder= "({{producto.cantidad}} disponibles)"></ion-input>
   </ion-item>
-
-  <ion-button (click)="agregarCarrito()" expand="block" shape="round" [routerLink]="['/home']">
-    agragar al carrito
-  </ion-button>
+   <ion-item>
+     <ion-icon color="success" name="card"></ion-icon>
+     <ion-text color="success">
+       <h6>Paga en 3 cuotas sin interés</h6>
+     </ion-text>
+   </ion-item>
+  
+    <ion-button (click)="agregarCarrito()" expand="block" [routerLink]="['/home']" [disabled]="producto.cantidad==0">
+      <ion-icon slot="start" name="cart"></ion-icon>
+      agragar al carrito
+    </ion-button>
     
 
 </ion-content>
