@@ -64,12 +64,12 @@ export class ProductoService {
     }  
   
   
-  public agregarUnoAlCarrito(id1: string) {
+  public agregarUnoAlCarrito(id1: string,cantidad:number) {
     if (this.controlDeStock(id1) == true) {
       if (this.carrito.length == 0) {
         let carro: Carrito = {
           id: id1,
-          cantidad: 1
+          cantidad: cantidad
         }
         this.carrito.push(carro);
       }
@@ -77,7 +77,7 @@ export class ProductoService {
         let flag = 0;
         for (let carr of this.carrito) {
           if (carr.id == id1) {
-            carr.cantidad = carr.cantidad + 1;
+            carr.cantidad = carr.cantidad + cantidad;
             flag = 1;
           }
         }
@@ -85,7 +85,7 @@ export class ProductoService {
         
           let carro: Carrito = {
             id: id1,
-            cantidad: 1
+            cantidad: cantidad
           }
           this.carrito.push(carro);
         }
@@ -114,6 +114,15 @@ export class ProductoService {
       if (prod.id == id) { 
         return prod;
       }
+    }
+  }
+  public obtenerCarritoPorId(id: string) {
+    if (this.carrito.length>0){
+    for (let carr of this.carrito) {
+      if (carr.id == id) { 
+        return carr;
+      }
+    }
     }
   }
   public agregar(prod: Producto) {
