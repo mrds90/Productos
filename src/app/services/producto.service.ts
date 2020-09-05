@@ -96,9 +96,6 @@ export class ProductoService {
       alert('No hay STOCK')
     }
   }
-    
-    //this.productosComprados = this.productosComprados + carr.cantidad;
-  
   public cantidadDeArticulosComprados() {
     let aux=0;
     for (let carr of this.carrito) {
@@ -128,7 +125,6 @@ export class ProductoService {
   public agregar(prod: Producto) {
     this.productos.push(prod);
   }
-  
   public cargarCarrito()
   {
     return this.carrito;

@@ -24,7 +24,6 @@ export class ProductoPage implements OnInit {
         }
         
     });
-    
   }
   agregarCarrito() {
     this.activeteRoute.paramMap.subscribe(paramMap => {
