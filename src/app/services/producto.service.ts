@@ -1,143 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Producto } from '../model/producto';
-import { Carrito } from '../model/carrito';
-
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
-  private productos:Array<Producto> = [
-    {
-      id: '1',
-      nombre: 'Celular',
-      precio: 1500,
-      cantidad: 10,
-      imagen: 'https://http2.mlstatic.com/celular-motorola-one-action-128gb-triple-camara-oficial-12c-D_NQ_NP_750867-MLA32171288429_092019-F.jpg'
-    },
-    {
-      id: '2',
-      nombre: 'Tablet',
-      precio: 3000,
-      cantidad: 3,
-      imagen: 'https://www.lenovo.com/medias/lenovo-tablet-m10-hero-1-.png?context=bWFzdGVyfHJvb3R8NjI0MTF8aW1hZ2UvcG5nfGgyMi9oMmIvOTk4ODM0NjQ0NTg1NC5wbmd8MDYxMDlmYTE0M2YxZDMyM2VjYTUyMThjNDQwM2VlNzgyYTQ5ZTM0OTVlZmM4OWI3OTc0ZjA1NjI4YjYwNTQxZQ'
-    },
-    {
-      id: '3',
-      nombre: 'Notebook',
-      precio: 7000,
-      cantidad: 0,
-      imagen: 'https://medias.musimundo.com/medias/sys_master/images/images/h87/he8/10166024339486/00291043-138995-138995-01-138995-01.jpg'
-    }
-  ]
-  //private carrito: Array<Carrito>;
-  private carrito: Array<Carrito> = [];
   
-  constructor() { }
-  private controlDeStock(id: string)
-  {
-    let aux: number;
-    for (let prod of this.productos){
-      if (prod.id == id) {
-        aux = prod.cantidad - this.cantidadCarro(id);
-      }
-    }
-    if (aux <= 0) {
-      return false;
-    }
-    else {
-      return true;
-    }
-    
-  }
-  private cantidadCarro(id:string) {
-    if (this.carrito.length > 0) {
-      for (let carr of this.carrito) {
-        if (carr.id == id) {
-          return carr.cantidad;
-        }
-      }
-    }
-    else {
-      return 0;
-    }
-    }  
+  private carrito: Array<Producto> = [];
   
   
-  public agregarUnoAlCarrito(id1: string,cantidad:number) {
-    if (this.controlDeStock(id1) == true) {
-      if (this.carrito.length == 0) {
-        let carro: Carrito = {
-          id: id1,
-          cantidad: cantidad
-        }
-        this.carrito.push(carro);
-      }
-      else {
-        let flag = 0;
-        for (let carr of this.carrito) {
-          if (carr.id == id1) {
-            carr.cantidad = carr.cantidad + cantidad;
-            flag = 1;
-          }
-        }
-        if (flag == 0) {
-        
-          let carro: Carrito = {
-            id: id1,
-            cantidad: cantidad
-          }
-          this.carrito.push(carro);
-        }
-        
-      }
-    }
-    else {
-      alert('No hay STOCK')
-    }
-  }
-  public cantidadDeArticulosComprados() {
-    let aux=0;
-    for (let carr of this.carrito) {
-      aux = aux + carr.cantidad;
-    }
-  return aux;
-  }
+  constructor(private httpClient: HttpClient) { };
+  
   public obtenerTodos() {
-    return this.productos;
+    return this.httpClient.get<Producto[]>('http://localhost:3000/Productos');
   }
   public obtenerPorId(id: string) {
-    for (let prod of this.productos) {
-      if (prod.id == id) { 
-        return prod;
-      }
+    return this.httpClient.get<Producto>('http://localhost:3000/Productos/' + id);
+  }
+  public agregar(prod: Producto, cantidad: number) {
+    for (let i = 0; i < cantidad; i++) {
+      this.carrito.push(prod);
     }
   }
-  public obtenerCarritoPorId(id: string) {
-    if (this.carrito.length>0){
-    for (let carr of this.carrito) {
-      if (carr.id == id) { 
-        return carr;
-      }
-    }
-    }
-  }
-  public agregar(prod: Producto) {
-    this.productos.push(prod);
-  }
-  public cargarCarrito()
-  {
+  public getCarrito() {
     return this.carrito;
-  }
-  private sacarProducto(id,cantidad) {
-    for (let prod of this.productos)
-      if (prod.id == id) {
-        prod.cantidad = prod.cantidad - cantidad;
-      }
-  }
-  public comprarCarrito(carro: Array<Carrito>) {
-    for (let car of carro)
-      this.sacarProducto(car.id, car.cantidad)
-    this.carrito = [];
   }
 }

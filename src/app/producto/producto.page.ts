@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductoService } from '../services/producto.service';
-import { Carrito } from '../model/carrito';
+import { Producto } from '../model/producto';
 
 @Component({
   selector: 'app-producto',
@@ -9,26 +9,23 @@ import { Carrito } from '../model/carrito';
   styleUrls: ['./producto.page.scss'],
 })
 export class ProductoPage implements OnInit {
-  private producto;
-  private cantidad: number;
-  private carrito: Carrito;
-  private comprado: number=0;
+  private cantidad;
+  private producto = new Producto;
   constructor(private activeteRoute:ActivatedRoute, private prodSrv: ProductoService) { }
 
-  ngOnInit() {
-      this.activeteRoute.paramMap.subscribe(paramMap => { //el segundo paramMap es una variable y el primero una Clase.
-      this.producto = this.prodSrv.obtenerPorId(paramMap.get('id'));
-      this.carrito = this.prodSrv.obtenerCarritoPorId(paramMap.get('id'));
-        if (this.carrito) {
-          this.comprado = this.carrito.cantidad;
-        }
+  ngOnInit() {    
+    this.activeteRoute.paramMap.subscribe(
+      paramMap => {
+          this.prodSrv.obtenerPorId(paramMap.get("id")).subscribe(datos => {
+            this.producto = datos;
+            
+          });
+    });
+}
+  public agregarCarrito(): void{
+    this.prodSrv.agregar(this.producto,this.cantidad);
+    
         
-    });
-  }
-  agregarCarrito() {
-    this.activeteRoute.paramMap.subscribe(paramMap => {
-      this.prodSrv.agregarUnoAlCarrito(paramMap.get('id'), this.cantidad);
-    });
   }
 
 }

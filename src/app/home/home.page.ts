@@ -10,17 +10,15 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class HomePage {
   private productos;
-  private cantidad;
+  private carrito: Array<Producto>;
+  private cantidad = 0;
   
-  constructor(private prodSrv: ProductoService, public router: Router) {
-    this.router.events.subscribe((ev) => {
-      if (ev instanceof NavigationEnd) {
-        this.cantidad = prodSrv.cantidadDeArticulosComprados();
-        this.productos = prodSrv.obtenerTodos();
-      }
-    });
-    
-    };
+  constructor(private prodSrv: ProductoService) {
+    prodSrv.obtenerTodos().subscribe(datos => {
+      this.productos = datos;
+     });
+    this.carrito = prodSrv.getCarrito();
+   };
 
   }
 

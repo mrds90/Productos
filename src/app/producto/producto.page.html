@@ -19,7 +19,7 @@
   </ion-item>
   <ion-item>
    <ion-label color='primary'>Cantidad: </ion-label>
-   <ion-input type="number" min="0" [(ngModel)]="cantidad" placeholder= "({{producto.cantidad-comprado}} disponibles)"></ion-input>
+   <ion-input type="number" min="0" [(ngModel)]="cantidad" placeholder= "({{producto.cantidad}} disponibles)"></ion-input>
   </ion-item>
    <ion-item>
      <ion-icon color="success" name="card"></ion-icon>
@@ -28,7 +28,8 @@
      </ion-text>
    </ion-item>
   
-    <ion-button (click)="agregarCarrito()" expand="block" [routerLink]="['/home']" [disabled]="producto.cantidad<(cantidad+comprado) || cantidad==NaN || cantidad<1">
+    <ion-button (click)="agregarCarrito()" expand="block" [routerLink]="['/home']" [disabled]="producto.cantidad<(cantidad) || cantidad==NaN || cantidad<1">
+    
       <ion-icon slot="start" name="cart"></ion-icon>
       agragar al carrito
     </ion-button>
