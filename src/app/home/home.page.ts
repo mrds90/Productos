@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../services/producto.service';
 import { Producto } from '../model/producto';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -9,20 +9,31 @@ import { AlertController } from '@ionic/angular';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
   private productos;
   private carrito: Array<Producto>;
   private cantidad = 0;
     
-  constructor(private prodSrv: ProductoService, private alContrl: AlertController) {
-    prodSrv.obtenerTodos().subscribe(datos => {
-      this.productos = datos;
+  constructor(private prodSrv: ProductoService, private alContrl: AlertController, private lodading: LoadingController) { }
+  
+  public async ngOnInit() {
+    const loading = await this.lodading.create({  message: 'Cargando',
+    duration: 2000,
+    spinner: 'bubbles'});  
+
+    loading.present();
+    this.prodSrv.obtenerTodos().subscribe(datos => {
+      
+      this.productos = datos
+      loading.dismiss();
      });
-    this.carrito = prodSrv.getCarrito();
-  };
+    this.carrito = this.prodSrv.getCarrito();
+    
+  }
+  
   public async verCarrito(){
     const cuerpoAleta = {
-      header: "Titulo",
+      header: "Carro de compras",
       subHeader: "SubTitulo",
       message: "Mensaje",
       buttons: ["ok"]
