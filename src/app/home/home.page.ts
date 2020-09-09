@@ -14,7 +14,9 @@ export class HomePage implements OnInit{
   private carrito: Array<Producto>;
   private cantidad = 0;
     
-  constructor(private prodSrv: ProductoService, private alContrl: AlertController, private lodading: LoadingController) { }
+  constructor(private prodSrv: ProductoService, private alContrl: AlertController, private lodading: LoadingController) { 
+    this.carrito = this.prodSrv.getCarrito();
+  }
   
   public async ngOnInit() {
     const loading = await this.lodading.create({  message: 'Cargando',
@@ -23,11 +25,11 @@ export class HomePage implements OnInit{
 
     loading.present();
     this.prodSrv.obtenerTodos().subscribe(datos => {
-      
-      this.productos = datos
-      loading.dismiss();
-     });
-    this.carrito = this.prodSrv.getCarrito();
+    this.productos = datos
+    loading.dismiss();
+    });
+    
+    
     
   }
   
