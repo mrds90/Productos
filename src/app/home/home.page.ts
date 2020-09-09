@@ -14,11 +14,10 @@ export class HomePage implements OnInit{
   private carrito: Array<Producto>;
   private cantidad = 0;
     
-  constructor(private prodSrv: ProductoService, private alContrl: AlertController, private lodading: LoadingController) { 
-    this.carrito = this.prodSrv.getCarrito();
-  }
+  constructor(private prodSrv: ProductoService, private alContrl: AlertController, private lodading: LoadingController) {}
   
   public async ngOnInit() {
+    this.carrito = this.prodSrv.getCarrito();
     const loading = await this.lodading.create({  message: 'Cargando',
     duration: 2000,
     spinner: 'bubbles'});  
@@ -28,9 +27,6 @@ export class HomePage implements OnInit{
     this.productos = datos
     loading.dismiss();
     });
-    
-    
-    
   }
   
   public async verCarrito(){
