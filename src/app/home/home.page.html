@@ -3,7 +3,7 @@
     <ion-title>
       Productos
     </ion-title>
-    <ion-avatar slot="end" [routerLink]="['/carrito']"> 
+    <ion-avatar slot="end" (click)="verCarrito()"> 
       <ion-badge class="cantidadCarrito" color="danger" mode="ios">{{carrito.length}}</ion-badge>
       <ion-img class="img" src="../../assets/Carro de compras.png"></ion-img>
     </ion-avatar>
